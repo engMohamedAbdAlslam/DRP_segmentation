@@ -45,11 +45,11 @@ data/
 
 ## Recommended Datasets (Colab, Medium-Sized)
 
-- **Lesion segmentation**: IDRiD lesion segmentation (Kaggle dataset, update the slug in the notebook if needed).
-- **Vessel segmentation**: DRIVE, STARE, CHASE-DB1 (download individually or use a Kaggle bundle, then place under `data/raw/vessels`).
+- **Lesion segmentation**: IDRiD lesion segmentation (KaggleHub dataset, update the slug in the notebook if needed).
+- **Vessel segmentation**: DRIVE, STARE, CHASE-DB1 (download individually with KaggleHub, then place under `data/raw/vessels`).
 - **Classification**: APTOS 2019 Blindness Detection (Kaggle competition `aptos2019-blindness-detection`).
 
-Each notebook contains Kaggle download instructions and creates train/val/test splits from the datasets above.
+Each notebook contains KaggleHub download instructions and creates train/val/test splits from the datasets above.
 ```
 
 ## Next Integration Targets
