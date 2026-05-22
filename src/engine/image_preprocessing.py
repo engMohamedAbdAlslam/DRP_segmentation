@@ -9,6 +9,8 @@ from typing import Any, Dict, Optional, Tuple, Union
 import cv2
 import numpy as np
 
+MIN_CROP_SIZE = 10
+
 ImageInput = Union[str, Path, np.ndarray]
 MaskInput = Optional[Union[str, Path, np.ndarray]]
 
@@ -175,7 +177,7 @@ def _compute_crop_bbox(image: np.ndarray, threshold: int) -> Optional[Tuple[int,
     coords = np.argwhere(foreground)
     y_min, x_min = coords.min(axis=0)
     y_max, x_max = coords.max(axis=0)
-    if (y_max - y_min) < 10 or (x_max - x_min) < 10:
+    if (y_max - y_min) < MIN_CROP_SIZE or (x_max - x_min) < MIN_CROP_SIZE:
         return None
     return int(x_min), int(y_min), int(x_max) + 1, int(y_max) + 1
 
