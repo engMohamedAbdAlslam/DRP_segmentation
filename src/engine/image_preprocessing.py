@@ -119,9 +119,10 @@ def save_preprocessed(result: PreprocessResult, output_path: Union[str, Path]) -
 
 
 def _load_image(image: ImageInput) -> np.ndarray:
-    """Load an RGB image from disk or validate a numpy array input.
+    """Load an image from disk or validate an RGB numpy array input.
 
-    Returns a BGR uint8 array for OpenCV compatibility.
+    For array inputs, the expected format is RGB. The returned array is BGR uint8 for
+    OpenCV compatibility.
     """
     if isinstance(image, (str, Path)):
         image_path = Path(image)

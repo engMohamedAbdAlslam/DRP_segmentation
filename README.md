@@ -1,4 +1,4 @@
-# DRP Segmentation Prototype
+# Diabetic Retinopathy (DRP) Segmentation Prototype
 
 This repository contains a modular retinal image analysis prototype for diabetic retinopathy screening. The codebase separates preprocessing, model training, and reporting to support reproducibility and clinical review.
 
