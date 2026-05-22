@@ -1,7 +1,10 @@
 cohere==5.5.8
 fastapi==0.110.2
+kaggle==1.6.17
 matplotlib==3.8.4
 numpy==1.26.4
 opencv-python-headless==4.10.0.84
-uvicorn[standard]==0.29.0
+pandas==2.2.2
 pydantic-settings==2.2.1
+scikit-learn==1.5.0
+uvicorn[standard]==0.29.0
