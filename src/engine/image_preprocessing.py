@@ -47,6 +47,16 @@ def preprocess_fundus_image(
     mask: MaskInput = None,
     config: Optional[PreprocessConfig] = None,
 ) -> PreprocessResult:
+    """Preprocess a fundus image into a standardized tensor and metadata.
+
+    Args:
+        image: File path or RGB array with shape (H, W, 3).
+        mask: Optional file path or mask array aligned to the image.
+        config: Preprocess configuration; defaults are used when None.
+
+    Returns:
+        PreprocessResult containing the normalized image, optional mask, and metadata.
+    """
     if config is None:
         config = PreprocessConfig()
 
@@ -93,6 +103,10 @@ def preprocess_fundus_image(
 
 
 def save_preprocessed(result: PreprocessResult, output_path: Union[str, Path]) -> None:
+    """Save a preprocessing result to a compressed .npz file.
+
+    The output includes the image array, optional mask, and JSON metadata.
+    """
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     payload: Dict[str, Any] = {
@@ -105,6 +119,10 @@ def save_preprocessed(result: PreprocessResult, output_path: Union[str, Path]) -
 
 
 def _load_image(image: ImageInput) -> np.ndarray:
+    """Load an RGB image from disk or validate a numpy array input.
+
+    Returns a BGR uint8 array for OpenCV compatibility.
+    """
     if isinstance(image, (str, Path)):
         image_path = Path(image)
         if not image_path.exists():
@@ -123,6 +141,7 @@ def _load_image(image: ImageInput) -> np.ndarray:
 
 
 def _load_mask(mask: ImageInput) -> np.ndarray:
+    """Load a mask from disk or normalize a numpy array mask input."""
     if isinstance(mask, (str, Path)):
         mask_path = Path(mask)
         if not mask_path.exists():
@@ -139,6 +158,15 @@ def _load_mask(mask: ImageInput) -> np.ndarray:
 
 
 def _compute_crop_bbox(image: np.ndarray, threshold: int) -> Optional[Tuple[int, int, int, int]]:
+    """Compute the foreground bounding box using a grayscale threshold.
+
+    Args:
+        image: RGB image array.
+        threshold: Grayscale threshold to separate foreground from background.
+
+    Returns:
+        Bounding box as (x_min, y_min, x_max, y_max) or None if no foreground.
+    """
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     foreground = gray > threshold
     if not np.any(foreground):
@@ -152,11 +180,13 @@ def _compute_crop_bbox(image: np.ndarray, threshold: int) -> Optional[Tuple[int,
 
 
 def _apply_crop(image: np.ndarray, bbox: Tuple[int, int, int, int]) -> np.ndarray:
+    """Crop an image or mask using a bounding box (x_min, y_min, x_max, y_max)."""
     x_min, y_min, x_max, y_max = bbox
     return image[y_min:y_max, x_min:x_max]
 
 
 def _apply_clahe(image: np.ndarray, config: PreprocessConfig) -> np.ndarray:
+    """Apply CLAHE to the L channel in LAB space for illumination correction."""
     lab = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
     l_channel, a_channel, b_channel = cv2.split(lab)
     clahe = cv2.createCLAHE(
@@ -169,11 +199,13 @@ def _apply_clahe(image: np.ndarray, config: PreprocessConfig) -> np.ndarray:
 
 
 def _resize_image(image: np.ndarray, target_size: Tuple[int, int], interpolation: int) -> np.ndarray:
+    """Resize an image to (width, height) using the specified interpolation."""
     target_width, target_height = target_size
     return cv2.resize(image, (target_width, target_height), interpolation=interpolation)
 
 
 def _normalize_image(image: np.ndarray, normalization: str) -> np.ndarray:
+    """Normalize an RGB image using zero-one or ImageNet statistics."""
     image = image.astype(np.float32) / 255.0
     if normalization == "zero_one":
         return image
@@ -185,6 +217,7 @@ def _normalize_image(image: np.ndarray, normalization: str) -> np.ndarray:
 
 
 def _build_cli_parser() -> argparse.ArgumentParser:
+    """Create the CLI argument parser for preprocessing a single image."""
     parser = argparse.ArgumentParser(description="Preprocess a fundus image for DR analysis.")
     parser.add_argument("--image", required=True, help="Path to the input fundus image.")
     parser.add_argument("--mask", default=None, help="Optional path to an input mask.")
@@ -200,6 +233,7 @@ def _build_cli_parser() -> argparse.ArgumentParser:
 
 
 def _parse_size(value: str) -> Tuple[int, int]:
+    """Parse a comma-separated width,height string into an integer tuple."""
     parts = value.split(",")
     if len(parts) != 2:
         raise ValueError("Size must be provided as width,height.")
@@ -208,6 +242,7 @@ def _parse_size(value: str) -> Tuple[int, int]:
 
 
 def _run_cli() -> None:
+    """Execute the preprocessing command-line interface."""
     parser = _build_cli_parser()
     args = parser.parse_args()
     config = PreprocessConfig(
