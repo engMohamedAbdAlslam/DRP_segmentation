@@ -4,7 +4,7 @@ This repository contains a modular retinal image analysis prototype for diabetic
 
 ## Preprocessing Module
 
-Location: `src/engine/image_prepocessing.py`
+Location: `src/engine/image_preprocessing.py`
 
 Core contract:
 - **Input**: fundus image path or `numpy.ndarray` (H, W, 3), optional mask path or array.
@@ -29,7 +29,7 @@ save_preprocessed(result, "data/processed/sample.npz")
 ### CLI
 
 ```bash
-python src/engine/image_prepocessing.py --image data/raw/images/sample.png --output data/processed/sample.npz
+python src/engine/image_preprocessing.py --image data/raw/images/sample.png --output data/processed/sample.npz
 ```
 
 ## Minimal Dataset Layout

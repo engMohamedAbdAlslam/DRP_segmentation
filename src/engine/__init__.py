@@ -1,4 +1,4 @@
-from .image_prepocessing import PreprocessConfig, PreprocessMetadata, PreprocessResult, preprocess_fundus_image, save_preprocessed
+from .image_preprocessing import PreprocessConfig, PreprocessMetadata, PreprocessResult, preprocess_fundus_image, save_preprocessed
 
 __all__ = [
     "PreprocessConfig",
