@@ -138,7 +138,7 @@ def _load_image(image: ImageInput) -> np.ndarray:
         raise ValueError("Image array must have shape (H, W, 3).")
     if image.dtype != np.uint8:
         image = image.astype(np.uint8)
-    return image
+    return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
 
 def _load_mask(mask: ImageInput) -> np.ndarray:
@@ -219,7 +219,7 @@ def _normalize_image(image: np.ndarray, normalization: str) -> np.ndarray:
 
 def _build_cli_parser() -> argparse.ArgumentParser:
     """Create the CLI argument parser for preprocessing a single image."""
-    parser = argparse.ArgumentParser(description="Preprocess a fundus image for DR analysis.")
+    parser = argparse.ArgumentParser(description="Preprocess a fundus image for diabetic retinopathy analysis.")
     parser.add_argument("--image", required=True, help="Path to the input fundus image.")
     parser.add_argument("--mask", default=None, help="Optional path to an input mask.")
     parser.add_argument("--output", required=True, help="Output .npz file to store preprocessed arrays.")
