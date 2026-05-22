@@ -37,10 +37,19 @@ python src/engine/image_preprocessing.py --image data/raw/images/sample.png --ou
 ```
 data/
   raw/
-    images/        # Original fundus images
-    masks/         # Optional lesion or vessel masks
+    idrid/         # IDRiD images + lesion masks
+    vessels/       # DRIVE/STARE/CHASE-DB1 vessel data
+    aptos2019/     # APTOS 2019 images + labels
   processed/
     images/        # Preprocessed outputs (.npz)
+
+## Recommended Datasets (Colab, Medium-Sized)
+
+- **Lesion segmentation**: IDRiD lesion segmentation (Kaggle dataset, update the slug in the notebook if needed).
+- **Vessel segmentation**: DRIVE, STARE, CHASE-DB1 (download individually or use a Kaggle bundle, then place under `data/raw/vessels`).
+- **Classification**: APTOS 2019 Blindness Detection (Kaggle competition `aptos2019-blindness-detection`).
+
+Each notebook contains Kaggle download instructions and creates train/val/test splits from the datasets above.
 ```
 
 ## Next Integration Targets
