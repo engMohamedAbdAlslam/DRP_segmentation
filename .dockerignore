@@ -1,0 +1,29 @@
+# Git & Docker configuration files
+.git
+.gitignore
+.dockerignore
+docker/
+
+# Environment & Secrets (حماية أمنية)
+.env
+src/.env
+
+# Python Cache & Virtual Envs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+
+# Notebooks & Test Images (غير نحتاجها في الـ API)
+notebooks/
+*.ipynb
+*.png
+*.jpg
+*.jpeg
+*.tif
+
+# IDEs
+.vscode/
+.idea/
