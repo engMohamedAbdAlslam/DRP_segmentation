@@ -89,13 +89,7 @@ Get your token from: [kaggle.com/settings → API → Create New Token](https://
 
 ## Next Steps
 
-- [ ] Notebook 04 — DR Grading Model (EfficientNet-B4 on APTOS)
-- [ ] Notebook 05 — Vessel Segmentation Model (U-Net on DRIVE)
 - [ ] Notebook 06 — Grad-CAM Explainability
 - [ ] Notebook 07 — Clinical Interface (Gradio/Streamlit)
 
----
 
-## Branch
-
-Active development branch: `copilot/develop-preprocessing-pipeline`
